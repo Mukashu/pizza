@@ -23,6 +23,15 @@
   margin: 14px 0 15px 0;
 }
 
+.product-action {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-action .btn.btn-white {
+  margin-top: 10px;
+}
+
 .product-action .btn {
   width: 242px;
   height: 50px;

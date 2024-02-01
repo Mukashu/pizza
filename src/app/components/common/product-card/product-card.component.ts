@@ -11,13 +11,13 @@ import {TitleComponent} from "../title/title.component";
 import {CartProductService} from "../../../services/cart-product.service";
 
 @Component({
-  selector: 'product',
-  templateUrl: './product.component.html',
-  styleUrls: ['./product.component.scss'],
+  selector: 'product-card',
+  templateUrl: './product-card.component.html',
+  styleUrls: ['./product-card.component.scss'],
   providers: [CartProductService]
 })
 
-export class ProductComponent {
+export class ProductCardComponent {
 
   @Input() product: ProductType;
   @Output() addToCartEvent: EventEmitter<string> = new EventEmitter<string>();
@@ -30,6 +30,7 @@ export class ProductComponent {
 
   constructor(public cartProductService: CartProductService) {
     this.product = {
+      id: 0,
       image: '',
       title: '',
       description: '',
