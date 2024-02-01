@@ -7,7 +7,4 @@ export class CartProductService {
 
   constructor(private cartService: CartService) {}
 
-  getCommonCount() {
-    return this.count + '/' + this.cartService.count;
-  }
 }

@@ -34,16 +34,16 @@
       </div>
       <ul>
         <li class="menu-item">
-          <a href="#pizza">Пиццы</a>
+          <a [routerLink]="''" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Главная</a>
         </li>
         <li class="menu-item">
-          <a href="#pizza">Напитки</a>
+          <a [routerLink]="'/products'" routerLinkActive="active">Пиццы</a>
         </li>
         <li class="menu-item">
-          <a href="#order">Доставка и оплата</a>
+          <a [routerLink]="'/about'" routerLinkActive="active">О нас</a>
         </li>
         <li class="menu-item">
-          <a href="#order">Контакты</a>
+          <a [routerLink]="'/order'" routerLinkActive="active">Сделать заказ</a>
         </li>
       </ul>
     </nav>
@@ -51,7 +51,4 @@
       <img src="../../../../assets/images/cart.png" alt="Cart">
     </div>
   </div>
-
-  <div>{{cartService.count}}</div>
-
 </header>
