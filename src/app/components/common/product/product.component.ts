@@ -36,9 +36,4 @@ export class ProductComponent {
       datetime: ''
     }
   }
-
-  addProductToCart(): void {
-    this.cartProductService.count++;
-    this.addToCartEvent.emit(this.titleComponent.title);
-  }
 }

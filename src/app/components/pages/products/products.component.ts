@@ -12,16 +12,10 @@ import {Router} from "@angular/router";
 export class ProductsComponent implements OnInit {
   products: ProductType[] = [];
 
-  constructor(private productService: ProductService,
-              private cartService: CartService,
-              private router: Router) { }
+  constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
     this.products = this.productService.getProducts();
   }
 
-  addToCart(title: string): void {
-    this.cartService.product = title;
-    this.router.navigate(['/order']);
-  }
 }

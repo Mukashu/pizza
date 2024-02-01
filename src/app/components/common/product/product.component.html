@@ -1,4 +1,4 @@
-<div class="product" >
+<div class="product">
 
   <ng-template [ngIf]="product.image">
     <div class="product-image" *ngIf="product.image">
@@ -10,7 +10,7 @@
 
   <div class="product-text">{{ product.description | wordUpper: ['сыр', 'томат', 'сос'] }}</div>
   <div class="product-action" #elem>
-    <button class="btn btn-add-to-cart" (click)="addProductToCart()">В корзину</button>
+    <a class="btn btn-add-to-cart" routerLink="/order" [queryParams]="{product: product.title}">В корзину</a>
   </div>
 </div>
 <!--(click)="addToCart(product, orderElement)"-->
