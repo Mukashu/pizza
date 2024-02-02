@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CartService} from "../../../services/cart.service";
-import {Observable, Subscription} from "rxjs";
+import {from, map, Observable, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-main',
@@ -42,6 +42,9 @@ export class MainComponent implements OnInit, OnDestroy {
         }
       }
     });
+
+
+    // this.observable = from([1, 2, 3, 4, 5]);
   }
 
   ngOnInit() {
@@ -73,7 +76,13 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   test() {
-    this.observable.subscribe((param: number) => {
+    this.observable
+      .pipe(
+        map((number) => {
+          return 'Число: ' + number;
+        })
+      )
+      .subscribe((param: string) => {
       console.log('subscriber 2: ', param);
     });
   }
