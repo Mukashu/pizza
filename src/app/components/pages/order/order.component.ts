@@ -22,16 +22,16 @@ export class OrderComponent implements OnInit {
     //   this.formValues.productTitle = this.cartService.product-card;
     // }
 
-    const productParam = this.activatedRoute.snapshot.queryParamMap.get('product');
-    if (productParam) {
-      this.formValues.productTitle = productParam;
-    }
+    // const productParam = this.activatedRoute.snapshot.queryParamMap.get('product');
+    // if (productParam) {
+    //   this.formValues.productTitle = productParam;
+    // }
 
-    // this.activatedRoute.queryParams.subscribe((params) => {
-    //   if (params['product-card']) {
-    //     this.formValues.productTitle = params['product-card'];
-    //   }
-    // })
+    this.activatedRoute.queryParams.subscribe((params) => {
+      if (params['product-card']) {
+        this.formValues.productTitle = params['product-card'];
+      }
+    })
   }
 
   createOrder(): void {
