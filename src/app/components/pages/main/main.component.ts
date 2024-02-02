@@ -25,6 +25,10 @@ export class MainComponent implements OnInit {
       }, 1000);
 
       setTimeout(() => {
+        observer.complete();
+      }, 4000);
+
+      setTimeout(() => {
         observer.error('world');
       }, 5000);
     });
@@ -39,6 +43,9 @@ export class MainComponent implements OnInit {
     this.observable.subscribe({
       next: (param: number) => {
         console.log('subscriber 1: ', param);
+      },
+      complete: () => {
+        console.log('Отсчет окончен');
       },
       error: (err: string) => {
         console.log('Спасите Помогите ' + err);
