@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CartService} from "../../../services/cart.service";
-import {from, map, Observable, Subscription} from "rxjs";
+import {from, map, Observable, Subject, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-main',
@@ -8,7 +8,9 @@ import {from, map, Observable, Subscription} from "rxjs";
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit, OnDestroy {
-  private observable: Observable<number>;
+  // private observable: Observable<number>;
+  private subject: Subject<number>;
+
   // private promise: Promise<string>;
 
   private subscription: Subscription | null = null;
@@ -20,31 +22,43 @@ export class MainComponent implements OnInit, OnDestroy {
     //   }, 4000)
     // });
 
-    this.observable = new Observable((observer) => {
-      let count = 0;
-      const interval = setInterval(() => {
-        observer.next(count++);
-      }, 1000);
 
-      const timeoutComplete = setTimeout(() => {
-        observer.complete();
-      }, 4000);
+    this.subject = new Subject<number>();
+    let count = 0;
+    const interval = setInterval(() => {
+      this.subject.next(count++);
+    }, 1000);
 
-      const timeoutErr =setTimeout(() => {
-        observer.error('world');
-      }, 5000);
-
-      return {
-        unsubscribe() {
-          clearInterval(interval);
-          clearInterval(timeoutComplete);
-          clearInterval(timeoutErr);
-        }
-      }
-    });
+    const timeoutComplete = setTimeout(() => {
+      this.subject.complete();
+    }, 4000);
 
 
     // this.observable = from([1, 2, 3, 4, 5]);
+
+
+    // this.observable = new Observable((observer) => {
+    //   let count = 0;
+    //   const interval = setInterval(() => {
+    //     observer.next(count++);
+    //   }, 1000);
+    //
+    //   const timeoutComplete = setTimeout(() => {
+    //     observer.complete();
+    //   }, 4000);
+    //
+    //   const timeoutErr =setTimeout(() => {
+    //     observer.error('world');
+    //   }, 5000);
+    //
+    //   return {
+    //     unsubscribe() {
+    //       clearInterval(interval);
+    //       clearInterval(timeoutComplete);
+    //       clearInterval(timeoutErr);
+    //     }
+    //   }
+    // });
   }
 
   ngOnInit() {
@@ -53,7 +67,7 @@ export class MainComponent implements OnInit, OnDestroy {
     // });
 
 
-   this.subscription = this.observable.subscribe({
+   this.subscription = this.subject.subscribe({
       next: (param: number) => {
         console.log('subscriber 1: ', param);
       },
@@ -76,7 +90,7 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   test() {
-    this.observable
+    this.subject
       .pipe(
         map((number) => {
           return 'Число: ' + number;
