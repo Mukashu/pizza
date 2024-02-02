@@ -1,15 +1,17 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CartService} from "../../../services/cart.service";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit, OnDestroy {
   private observable: Observable<number>;
   // private promise: Promise<string>;
+
+  private subscription: Subscription | null = null;
 
   constructor(public cartService: CartService) {
     // this.promise = new Promise<string>(resolve => {
@@ -20,17 +22,25 @@ export class MainComponent implements OnInit {
 
     this.observable = new Observable((observer) => {
       let count = 0;
-      setInterval(() => {
+      const interval = setInterval(() => {
         observer.next(count++);
       }, 1000);
 
-      setTimeout(() => {
+      const timeoutComplete = setTimeout(() => {
         observer.complete();
       }, 4000);
 
-      setTimeout(() => {
+      const timeoutErr =setTimeout(() => {
         observer.error('world');
       }, 5000);
+
+      return {
+        unsubscribe() {
+          clearInterval(interval);
+          clearInterval(timeoutComplete);
+          clearInterval(timeoutErr);
+        }
+      }
     });
   }
 
@@ -40,7 +50,7 @@ export class MainComponent implements OnInit {
     // });
 
 
-    this.observable.subscribe({
+   this.subscription = this.observable.subscribe({
       next: (param: number) => {
         console.log('subscriber 1: ', param);
       },
@@ -56,6 +66,10 @@ export class MainComponent implements OnInit {
     // this.promise.then((param: string) => {
     //   console.log(param);
     // });
+  }
+
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
   }
 
   test() {
