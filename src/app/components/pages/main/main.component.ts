@@ -31,9 +31,20 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.observable.subscribe((param: number) => {
-      console.log('subscriber 1: ', param);
-    });
+    // this.observable.subscribe((param: number) => {
+    //   console.log('subscriber 1: ', param);
+    // });
+
+
+    this.observable.subscribe({
+      next: (param: number) => {
+        console.log('subscriber 1: ', param);
+      },
+      error: (err: string) => {
+        console.log('Спасите Помогите ' + err);
+      }
+    })
+
 
     // this.promise.then((param: string) => {
     //   console.log(param);
