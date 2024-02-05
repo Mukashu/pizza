@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ProductType} from "../../../types/product.type";
 import {ProductService} from "../../../services/product.service";
 import {HttpClient} from "@angular/common/http";
+import {map, tap} from "rxjs";
 
 @Component({
   selector: 'app-products',
@@ -11,12 +12,17 @@ import {HttpClient} from "@angular/common/http";
 export class ProductsComponent implements OnInit {
   products: ProductType[] = [];
 
-  constructor(private productService: ProductService, private http: HttpClient) { }
+  constructor(private productService: ProductService, private http: HttpClient) {
+  }
 
   ngOnInit(): void {
     // this.products = this.productService.getProducts();
 
-    this.http.get<ProductType[]>('http://testologia.site/pizzas')
+    this.http.get<{ data: ProductType[] }>('http://testologia.site/pizzas?extraField=1')
+      .pipe(
+        tap(result => console.log(result)),
+        map(result => result.data)
+      )
       .subscribe(data => {
         this.products = data;
       })
