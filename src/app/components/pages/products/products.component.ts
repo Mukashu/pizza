@@ -3,6 +3,7 @@ import {ProductType} from "../../../types/product.type";
 import {ProductService} from "../../../services/product.service";
 import {HttpClient} from "@angular/common/http";
 import {map, tap} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-products',
@@ -12,7 +13,7 @@ import {map, tap} from "rxjs";
 export class ProductsComponent implements OnInit {
   products: ProductType[] = [];
 
-  constructor(private productService: ProductService, private http: HttpClient) {
+  constructor(private productService: ProductService, private http: HttpClient, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -23,8 +24,14 @@ export class ProductsComponent implements OnInit {
         tap(result => console.log(result)),
         map(result => result.data)
       )
-      .subscribe(data => {
-        this.products = data;
+      .subscribe({
+        next: data => {
+          this.products = data;
+        },
+        error: err => {
+          console.log(err);
+          this.router.navigate(['/']);
+        }
       })
   }
 
