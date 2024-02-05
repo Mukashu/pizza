@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ProductType} from "../../../types/product.type";
 import {ProductService} from "../../../services/product.service";
 import {HttpClient} from "@angular/common/http";
-import {catchError, map, tap} from "rxjs";
+import {catchError, map, of, retry, tap} from "rxjs";
 import {Router} from "@angular/router";
 
 @Component({
@@ -23,9 +23,10 @@ export class ProductsComponent implements OnInit {
       .pipe(
         tap(result => console.log(result)),
         map(result => result.data),
+        retry(3),
         catchError(err => {
-          throw new Error('omg');
-        })
+          return of([]);
+        }),
       )
       .subscribe({
         next: data => {
