@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {ProductType} from "../types/product.type";
-import {HttpClient} from "@angular/common/http";
-import {map, Observable} from "rxjs";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {map, Observable, tap} from "rxjs";
 
 @Injectable()
 export class ProductService {
@@ -11,9 +11,19 @@ export class ProductService {
   constructor(private http: HttpClient) { }
 
   getProducts(): Observable<ProductType[]> {
-    return this.http.get<{ data: ProductType[] }>('http://testologia.site/pizzas?extraField=1')
+    let params = new HttpParams();
+    params = params.set('extraField', 1);
+
+    return this.http.get<{ data: ProductType[] }>('https://testologia.site/pizzas', {
+      observe: 'response',
+      headers: new HttpHeaders({
+        Authorization: 'auth-token'
+      }),
+      params: params
+    })
       .pipe(
-        map(result => result.data)
+        tap(result => console.log(result)),
+        map(result => result.body ? result.body.data : [])
       );
   }
 
