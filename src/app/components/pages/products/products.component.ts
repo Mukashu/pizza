@@ -3,7 +3,7 @@ import {ProductType} from "../../../types/product.type";
 import {ProductService} from "../../../services/product.service";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
-import {Subscription} from "rxjs";
+import {Subscription, tap} from "rxjs";
 
 @Component({
   selector: 'app-products',
@@ -12,6 +12,7 @@ import {Subscription} from "rxjs";
 })
 export class ProductsComponent implements OnInit, OnDestroy {
   products: ProductType[] = [];
+  loading: boolean = false;
 
   private subscriptionProducts: Subscription | null = null;
 
@@ -21,7 +22,13 @@ export class ProductsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // this.products = this.productService.getProducts();
 
+    this.loading = true;
     this.subscriptionProducts = this.productService.getProducts()
+      .pipe(
+        tap(() => {
+          this.loading = false;
+        })
+      )
       .subscribe({
         next: data => {
           this.products = data;
