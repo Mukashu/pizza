@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ProductType} from "../../../types/product.type";
 import {ProductService} from "../../../services/product.service";
 import {HttpClient} from "@angular/common/http";
-import {map, tap} from "rxjs";
+import {catchError, map, tap} from "rxjs";
 import {Router} from "@angular/router";
 
 @Component({
@@ -19,10 +19,13 @@ export class ProductsComponent implements OnInit {
   ngOnInit(): void {
     // this.products = this.productService.getProducts();
 
-    this.http.get<{ data: ProductType[] }>('http://testologia.site/pizzas?extraField=1')
+    this.http.get<{ data: ProductType[] }>('http://testologia.size/pizzas?extraField=1')
       .pipe(
         tap(result => console.log(result)),
-        map(result => result.data)
+        map(result => result.data),
+        catchError(err => {
+          throw new Error('omg');
+        })
       )
       .subscribe({
         next: data => {
