@@ -19,7 +19,8 @@ import { AboutComponent } from './components/pages/about/about.component';
 import { ProductsComponent } from './components/pages/products/products.component';
 import { OrderComponent } from './components/pages/order/order.component';
 import { ProductComponent } from './components/pages/product/product.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {AuthInterceptor} from "./auth/autn.interceptor";
 
 @NgModule({
   declarations: [
@@ -45,7 +46,14 @@ import {HttpClientModule} from "@angular/common/http";
     FormsModule,
     HttpClientModule,
   ],
-  providers: [ProductService],
+  providers: [ProductService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

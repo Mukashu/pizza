@@ -21,6 +21,10 @@ export class AuthService {
     this.isLogged$.next(this.isLogged);
   }
 
+  getToken() {
+    return 'test';
+  }
+
   isLoggedIn(): boolean {
     return this.isLogged;
   }
