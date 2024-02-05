@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ProductType} from "../../../types/product.type";
 import {ProductService} from "../../../services/product.service";
-import {CartService} from "../../../services/cart.service";
-import {Router} from "@angular/router";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-products',
@@ -12,10 +11,15 @@ import {Router} from "@angular/router";
 export class ProductsComponent implements OnInit {
   products: ProductType[] = [];
 
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService, private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.products = this.productService.getProducts();
+    // this.products = this.productService.getProducts();
+
+    this.http.get<ProductType[]>('http://testologia.site/pizzas')
+      .subscribe(data => {
+        this.products = data;
+      })
   }
 
 }
