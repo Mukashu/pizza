@@ -1,34 +1,25 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {ProductType} from "../types/product.type";
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
-import {map, Observable, tap} from "rxjs";
+import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs";
 
 @Injectable()
 export class ProductService {
 
   private products: ProductType[] = [];
 
-  constructor(private http: HttpClient) { }
-
-  getProducts(): Observable<ProductType[]> {
-    let params = new HttpParams();
-    params = params.set('extraField', 1);
-
-    return this.http.get<{ data: ProductType[] }>('https://testologia.site/pizzas', {
-      observe: 'response',
-      headers: new HttpHeaders({
-        Authorization: 'auth-token'
-      }),
-      params: params
-    })
-      .pipe(
-        tap(result => console.log(result)),
-        map(result => result.body ? result.body.data : [])
-      );
+  constructor(private http: HttpClient) {
   }
 
-  getProduct(id: number): ProductType | undefined {
-    // ajax
-    return this.products.find(item => (item.id === id));
+  getProducts(): Observable<ProductType[]> {
+    return this.http.get<ProductType[]>('https://testologia.site/pizzas');
+  }
+
+  getProduct(id: number): Observable<ProductType> {
+    return this.http.get<ProductType>(`https://testologia.site/pizzas?id=${id}`);
+  }
+
+  createOrder(data: { product: string, address: string, phone: string }) {
+    return this.http.post<{ success: boolean, message?: string }>(`https://testologia.site/order-pizza`, data);
   }
 }
