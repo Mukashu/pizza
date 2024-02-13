@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CartService} from "../../../shared/services/cart.service";
 import {map, Subject, Subscription} from "rxjs";
+import * as bootstrap from "bootstrap";
 
 @Component({
   selector: 'app-main',
@@ -62,6 +63,9 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    const myModalAlternative = new bootstrap.Modal('#myModal', {});
+    myModalAlternative.show();
+
     // this.observable.subscribe((param: number) => {
     //   console.log('subscriber 1: ', param);
     // });
