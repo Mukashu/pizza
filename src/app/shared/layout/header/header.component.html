@@ -48,8 +48,21 @@
       </ul>
     </nav>
     <div class="cart">
-      <a href="#" (click)="logIn()" *ngIf="!loggedState">Войти</a>
-      <a href="#" (click)="logOut()" *ngIf="loggedState">Выйти</a>
+
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="logIn()" *ngIf="!loggedState">
+          <mat-icon>login</mat-icon>
+          <span>Войти</span>
+        </button>
+        <button mat-menu-item (click)="logOut()" *ngIf="loggedState">
+          <mat-icon>logout</mat-icon>
+          <span>Выйти</span>
+        </button>
+      </mat-menu>
+
     </div>
   </div>
 </header>
