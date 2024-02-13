@@ -33,7 +33,8 @@ import { PopupComponent } from './components/popup/popup.component';
     IsChickenDirective,
     ChickenDescriptionPipe,
     ChickenProductsPipe,
-    WordUpperPipe
+    WordUpperPipe,
+    PopupComponent
   ]
 })
 export class SharedModule {
