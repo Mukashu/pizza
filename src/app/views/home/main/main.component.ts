@@ -1,4 +1,12 @@
-import {Component, OnDestroy, OnInit, TemplateRef} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  TemplateRef,
+  ViewChild
+} from '@angular/core';
 import {CartService} from "../../../shared/services/cart.service";
 import {map, Subject, Subscription} from "rxjs";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
@@ -8,13 +16,16 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })
-export class MainComponent implements OnInit, OnDestroy {
+export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   // private observable: Observable<number>;
   private subject: Subject<number>;
 
   // private promise: Promise<string>;
 
   private subscription: Subscription | null = null;
+
+  @ViewChild('popup')
+  popup!: TemplateRef<ElementRef>;
 
   constructor(public cartService: CartService, private modalService: NgbModal) {
     // this.promise = new Promise<string>(resolve => {
@@ -85,13 +96,15 @@ export class MainComponent implements OnInit, OnDestroy {
     // });
   }
 
+  ngAfterViewInit() {
+    this.modalService.open(this.popup, {});
+  }
+
   ngOnDestroy() {
     this.subscription?.unsubscribe();
   }
 
-  test(popup: TemplateRef<any>) {
-    this.modalService.open(popup, {});
-
+  test() {
     this.subject
       .pipe(
         map((number) => {
