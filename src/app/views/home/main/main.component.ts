@@ -1,15 +1,13 @@
 import {
   AfterViewInit,
   Component,
-  ElementRef,
   OnDestroy,
   OnInit,
-  TemplateRef,
-  ViewChild
 } from '@angular/core';
 import {CartService} from "../../../shared/services/cart.service";
 import {map, Subject, Subscription} from "rxjs";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {PopupComponent} from "../../../shared/components/popup/popup.component";
 
 @Component({
   selector: 'app-main',
@@ -24,8 +22,8 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private subscription: Subscription | null = null;
 
-  @ViewChild('popup')
-  popup!: TemplateRef<ElementRef>;
+  // @ViewChild('popup')
+  // popup!: TemplateRef<ElementRef>;
 
   constructor(public cartService: CartService, private modalService: NgbModal) {
     // this.promise = new Promise<string>(resolve => {
@@ -97,7 +95,10 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.modalService.open(this.popup, {});
+    const modalRef = this.modalService.open(PopupComponent);
+    modalRef.componentInstance.data = 'Main component';
+
+    // this.modalService.open(this.popup, {});
   }
 
   ngOnDestroy() {

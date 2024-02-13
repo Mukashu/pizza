@@ -8,6 +8,7 @@ import {ChickenDescriptionPipe} from "./pipes/chicken-description.pipe";
 import {ChickenProductsPipe} from "./pipes/chicken-products.pipe";
 import {WordUpperPipe} from "./pipes/word-upper.pipe";
 import {RouterModule} from "@angular/router";
+import { PopupComponent } from './components/popup/popup.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import {RouterModule} from "@angular/router";
     IsChickenDirective,
     ChickenDescriptionPipe,
     ChickenProductsPipe,
-    WordUpperPipe
+    WordUpperPipe,
+    PopupComponent
   ],
   imports: [
     CommonModule,
