@@ -1,7 +1,7 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, TemplateRef} from '@angular/core';
 import {CartService} from "../../../shared/services/cart.service";
 import {map, Subject, Subscription} from "rxjs";
-import * as bootstrap from "bootstrap";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-main',
@@ -16,7 +16,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription | null = null;
 
-  constructor(public cartService: CartService) {
+  constructor(public cartService: CartService, private modalService: NgbModal) {
     // this.promise = new Promise<string>(resolve => {
     //   setTimeout(() => {
     //     resolve('hello')
@@ -63,15 +63,12 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    const myModalAlternative = new bootstrap.Modal('#myModal', {});
-    myModalAlternative.show();
-
     // this.observable.subscribe((param: number) => {
     //   console.log('subscriber 1: ', param);
     // });
 
 
-   this.subscription = this.subject.subscribe({
+    this.subscription = this.subject.subscribe({
       next: (param: number) => {
         console.log('subscriber 1: ', param);
       },
@@ -83,7 +80,6 @@ export class MainComponent implements OnInit, OnDestroy {
       }
     })
 
-
     // this.promise.then((param: string) => {
     //   console.log(param);
     // });
@@ -93,7 +89,9 @@ export class MainComponent implements OnInit, OnDestroy {
     this.subscription?.unsubscribe();
   }
 
-  test() {
+  test(popup: TemplateRef<any>) {
+    this.modalService.open(popup, {});
+
     this.subject
       .pipe(
         map((number) => {
@@ -101,7 +99,7 @@ export class MainComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe((param: string) => {
-      console.log('subscriber 2: ', param);
-    });
+        console.log('subscriber 2: ', param);
+      });
   }
 }

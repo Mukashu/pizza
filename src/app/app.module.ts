@@ -10,6 +10,7 @@ import {SharedModule} from "./shared/shared.module";
 import {FooterComponent} from "./shared/layout/footer/footer.component";
 import {HeaderComponent} from "./shared/layout/header/header.component";
 import { LayoutComponent } from './views/layout.component';
+// import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { LayoutComponent } from './views/layout.component';
     CoreModule,
     SharedModule,
     AppRoutingModule,
+    // NgbModule,
   ],
   providers: [],
 
