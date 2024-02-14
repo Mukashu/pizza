@@ -6,8 +6,8 @@ import {
 } from '@angular/core';
 import {CartService} from "../../../shared/services/cart.service";
 import {map, Subject, Subscription} from "rxjs";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {PopupComponent} from "../../../shared/components/popup/popup.component";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-main',
@@ -69,6 +69,9 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
+    console.log(environment.production);
+
+
     // this.observable.subscribe((param: number) => {
     //   console.log('subscriber 1: ', param);
     // });

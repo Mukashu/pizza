@@ -12,16 +12,22 @@
       </div>
     </div>
     <form class="order-form">
-      <input type="text" class="order-input" coolInput id="product-input"
-             [coolInputDefaultBgColor]="'gray'"
-             [coolInputFocusBgColor]="'red'"
-             name="pizza" placeholder="Пицца"
-             [(ngModel)]="formValues.productTitle">
-      <input type="text" class="order-input" id="address-input" name="address" placeholder="Адрес доставки"
-             [(ngModel)]="formValues.address">
-      <input type="text" class="order-input" coolInput id="phone-input" name="phone" placeholder="Телефон"
-             [(ngModel)]="formValues.phone">
-      <button class="btn" (click)="createOrder()" type="submit">Оформить заказ</button>
+      <span class="p-float-label">
+            <input type="text" class="order-input" id="product-input"
+                   pInputText [(ngModel)]="formValues.productTitle">
+            <label for="product-input">Пицца</label>
+      </span>
+      <span class="p-float-label">
+            <input type="text" class="order-input" id="address-input"
+                   pInputText [(ngModel)]="formValues.address">
+            <label for="product-input">Адрес доставки</label>
+      </span>
+      <span class="p-float-label">
+            <input type="text" class="order-input" id="phone-input"
+                   pInputText [(ngModel)]="formValues.phone">
+            <label for="product-input">Телефон</label>
+      </span>
+      <button class="btn" tuiButton (click)="createOrder()" type="submit">Оформить заказ</button>
     </form>
     <div class="order-image">
       <img src="../../../assets/images/superpizza.png" alt="Superpizza">
